@@ -9,7 +9,9 @@ import javax.persistence.*;
 public class Checkpoint {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id") private Long id;
-
+    @Column(name = "checkpoint_id") private Long checkpoint_id;
+    @Column(name = "text") private String text;
+    @Column(name = "checked") private Boolean checked;
+    @Column(name = "note") private Boolean note;
 
 }

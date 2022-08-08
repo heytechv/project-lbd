@@ -17,9 +17,9 @@ public class Delegation {
     @Column(name = "city") private String city;
     @Column(name = "country_code") private Locale country_code;  // Arrays.asList(Locale.getISOCountries()).contains("DE")
     @Column(name = "info") private String info;
-//    @Column(name = "start_date") private Timestamp start_date;
+
     @OneToOne(mappedBy = "delegation")
-    private Comment comment;
+    @Column(name = "comment") private Comment comment;
 
 
 }
