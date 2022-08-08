@@ -8,9 +8,11 @@ import java.sql.Timestamp;
 public class Delegation {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id") private Long id;
+    @Column(name = "delegation_id") private Long id;
     @Column(name = "start_date") private Timestamp start_date;
 //    @Column(name = "start_date") private Timestamp start_date;
+    @OneToOne(mappedBy = "delegation")
+    private Comment comment;
 
 
 }
