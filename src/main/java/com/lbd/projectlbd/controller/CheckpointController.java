@@ -16,13 +16,5 @@ public class CheckpointController {
 
     @Autowired CheckpointService checkpointService;
 
-    @PostMapping("/api/addcheckpoint")
-    public ResponseEntity<StandardResponse> addDelegation(@Valid @RequestBody CheckpointDto checkpointDto){
-        return checkpointService.add(checkpointDto);
-    }
 
-//    @DeleteMapping("/api/deletecheckpoint")
-//    public ResponseEntity<StandardResponse> deleteDelegation(@RequestParam Long id){
-//        return delegationService.delete(id);
-//    }
 }

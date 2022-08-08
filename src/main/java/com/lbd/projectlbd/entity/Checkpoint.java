@@ -11,12 +11,14 @@ import javax.persistence.*;
 public class Checkpoint {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "checkpoint_id") private Long id;
+    @Column(name = "id")            private Long id;
+    // checkpoint_id (id from master data)
+    @Column(name = "checkpoint_id") private Long masterDataCheckpointId;
     @Column(name = "is_checked")    private Boolean isChecked;
+    @Column(name = "description")   private String description;
     @Column(name = "comment")       private String comment;
-    //    @Column(name = "text") private String text;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "delegation_id")
     private Delegation delegation;
 

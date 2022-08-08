@@ -4,9 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Data
@@ -23,10 +21,12 @@ public class Delegation {
     @Column(name = "country")     private String countryCode;  // Arrays.asList(Locale.getISOCountries()).contains("DE")
     @Column(name = "description") private String description ;
 
+    // Comments for delegation
     @OneToMany(mappedBy = "delegation")
-    private Set<Comment> commentSet = new HashSet<>();
+    private List<Comment> commentSet = new ArrayList<>();  // order does matter for comments
 
-    @OneToOne(mappedBy = "delegation")
-    private Checkpoint checkpoint;
+    // Checkpoints for delegation
+    @OneToMany(mappedBy = "delegation")
+    private Set<Checkpoint> checkpointSet = new HashSet<>();
 
 }

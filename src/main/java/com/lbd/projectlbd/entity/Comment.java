@@ -17,10 +17,12 @@ public class Comment {
     @Column(name = "date")    private Date date;
     @Column(name = "content") private String text;
 
+    // Comment to delegation
     @ManyToOne
     @JoinColumn(name = "delegation_id")
     private Delegation delegation;
 
+    // Comment for comment (subcomment)
     @OneToMany(mappedBy = "comment")
     private Set<Comment> commentSet = new HashSet<>();
     @ManyToOne

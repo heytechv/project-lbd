@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 @Setter @Getter
 public class CheckpointDto {
     @NotNull private Long delegationId;
+    @NotNull private Long masterDataCheckpointId;
     @NotNull private String comment;
     private Boolean isChecked = false;
 }

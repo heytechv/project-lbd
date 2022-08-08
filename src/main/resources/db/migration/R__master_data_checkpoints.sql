@@ -7,8 +7,8 @@ ALTER TABLE masterdata_checkpoint
     ADD COLUMN description varchar(255) not NULL;
 
 INSERT INTO masterdata_checkpoint(spel_expression, description)
-VALUES ('country != ''PL''', 'Is the flight ticked purchased?'),
-       ('country != ''PL''', 'Is covid test done?'),
-       ('T(java.time.temporal.ChronoUnit).DAYS.between(date_begin,date_end) >= 2', 'Is the hotel booked?'),
+VALUES ('countryCode != ''PL''', 'Is the flight ticked purchased?'),
+       ('countryCode != ''PL''', 'Is covid test done?'),
+       ('T(java.time.temporal.ChronoUnit).DAYS.between(startDate.toLocalDateTime().toLocalDate(),endDate.toLocalDateTime().toLocalDate()) >= 2', 'Is the hotel booked?'),
        ('true', 'Is diet paid off?'),
        ('true', 'Is meeting schedule definied?');

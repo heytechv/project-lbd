@@ -12,17 +12,18 @@ public class CheckpointMapper {
         Checkpoint checkpoint = new Checkpoint();
         checkpoint.setComment(checkpointDto.getComment());
         checkpoint.setIsChecked(checkpointDto.getIsChecked());
+        checkpoint.setMasterDataCheckpointId(checkpointDto.getMasterDataCheckpointId());
 
         return checkpoint;
     }
 
-    public static CheckpointDto convertEntityToDto(Checkpoint checkpoint) {
-        CheckpointDto checkpointDto = new CheckpointDto();
-        checkpointDto.setDelegationId(checkpoint.getDelegation().getId());
-        checkpointDto.setComment(checkpoint.getComment());
-        checkpointDto.setIsChecked(checkpoint.getIsChecked());
-
-        return checkpointDto;
-    }
+//    public static CheckpointDto convertEntityToDto(Checkpoint checkpoint) {
+//        CheckpointDto checkpointDto = new CheckpointDto();
+//        checkpointDto.setDelegationId(checkpoint.getDelegation().getId());
+//        checkpointDto.setComment(checkpoint.getComment());
+//        checkpointDto.setIsChecked(checkpoint.getIsChecked());
+//
+//        return checkpointDto;
+//    }
 
 }
