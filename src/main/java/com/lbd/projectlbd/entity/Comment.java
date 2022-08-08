@@ -12,22 +12,19 @@ import java.util.Set;
 @Table(name = "COMMENT")
 public class Comment {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @Column(name = "id")      private Long id;
+    @Column(name = "author")  private String author;
+    @Column(name = "date")    private Date date;
+    @Column(name = "content") private String text;
 
-    @Column(name = "author")
-    private String author;
-    @Column(name = "date")
-    private Date date;
-    @Column(name = "text")
-    private String text;
     @ManyToOne
-    @JoinColumn(name = "delegation_id",referencedColumnName = "delegation_id")
+    @JoinColumn(name = "delegation_id")
     private Delegation delegation;
 
     @OneToMany(mappedBy = "comment")
-    private Set<Comment> comments=new HashSet<>();
+    private Set<Comment> commentSet = new HashSet<>();
     @ManyToOne
+    @JoinColumn(name = "parent_id")
     private Comment comment;
 
 
