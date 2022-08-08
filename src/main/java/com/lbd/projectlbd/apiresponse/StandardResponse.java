@@ -76,7 +76,11 @@ public class StandardResponse {
     /**
      * Build ResponseEntity message
      * */
-    public ResponseEntity<Object> buildResponseEntity() {
+    public ResponseEntity<StandardResponse> buildResponseEntity() {
+        return ResponseEntity.status(this.getStatus()).body(this);
+    }
+
+    public ResponseEntity<Object> buildResponseEntityObject() {
         return ResponseEntity.status(this.getStatus()).body(this);
     }
 

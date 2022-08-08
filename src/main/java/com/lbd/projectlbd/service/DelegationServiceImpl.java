@@ -19,21 +19,30 @@ public class DelegationServiceImpl implements DelegationService {
     @Autowired DelegationRepository delegationRepository;
 
 
-    @Override public ResponseEntity<Object> add(DelegationDTO delegationDTO) {
+    /**
+     * Utilities */
+    @Override public Delegation findById(Long id) {
+        Optional<Delegation> optionalDelegation = delegationRepository.findById(id);
+        if (optionalDelegation.isEmpty())
+            throw new EntityNotFoundException("Delegation with id="+id+" not found!");
+
+        return optionalDelegation.get();
+    }
+
+    /**
+     * Rest Controller */
+    @Override public ResponseEntity<StandardResponse> add(DelegationDTO delegationDTO) {
         Delegation delegation = DelegationMapper.convertDtoToEntity(delegationDTO);
         delegationRepository.save(delegation);
 
         return new StandardResponse(HttpStatus.OK, "Delegation added").buildResponseEntity();
     }
 
-    @Override public ResponseEntity<Object> delete(Long id) {
-        Optional<Delegation> optionalDelegation = delegationRepository.findById(id);
-        if (optionalDelegation.isEmpty())
-            throw new EntityNotFoundException("Delegation with id="+id+" not found!");
-        delegationRepository.delete(optionalDelegation.get());
-
+    @Override public ResponseEntity<StandardResponse> delete(Long id) {
+        delegationRepository.delete(findById(id));
         return new StandardResponse(HttpStatus.OK, "Delegation deleted").buildResponseEntity();
     }
+
 
 
 

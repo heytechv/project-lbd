@@ -26,4 +26,7 @@ public class Delegation {
     @OneToMany(mappedBy = "delegation")
     private Set<Comment> commentSet = new HashSet<>();
 
+    @OneToOne(mappedBy = "delegation")
+    private Checkpoint checkpoint;
+
 }

@@ -22,13 +22,13 @@ public class ControllersAdvice extends ResponseEntityExceptionHandler {
     Logger logger = LoggerFactory.getLogger(ControllersAdvice.class);
 
     @ExceptionHandler(MissingRequiredPropertiesException.class)
-    public ResponseEntity<Object> handleMissingRequiredProperties(MissingRequiredPropertiesException ex) {
+    public ResponseEntity<StandardResponse> handleMissingRequiredProperties(MissingRequiredPropertiesException ex) {
         StandardResponse errorResponse = new StandardResponse(HttpStatus.BAD_REQUEST, "Missing param(s)", ex);
         return errorResponse.buildResponseEntity();
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<Object> handleEntityNotfound(EntityNotFoundException ex) {
+    public ResponseEntity<StandardResponse> handleEntityNotfound(EntityNotFoundException ex) {
         StandardResponse errorResponse = new StandardResponse(HttpStatus.BAD_REQUEST, "Not found", ex);
         return errorResponse.buildResponseEntity();
     }
@@ -36,7 +36,7 @@ public class ControllersAdvice extends ResponseEntityExceptionHandler {
     /** Dla @RequestParam */
     @Override protected ResponseEntity<Object> handleMissingServletRequestParameter(MissingServletRequestParameterException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         StandardResponse errorResponse = new StandardResponse(HttpStatus.BAD_REQUEST, "Missing param "+ex.getParameterName(), ex);
-        return errorResponse.buildResponseEntity();
+        return errorResponse.buildResponseEntityObject();
     }
 
     /** Dla @Valid */
@@ -44,6 +44,6 @@ public class ControllersAdvice extends ResponseEntityExceptionHandler {
         StandardResponse errorResponse = new StandardResponse(HttpStatus.BAD_REQUEST, "Validation error", ex);
         errorResponse.addValidationError(ex.getBindingResult().getGlobalError());
         errorResponse.addValidationErrors(ex.getBindingResult().getFieldErrors());
-        return errorResponse.buildResponseEntity();
+        return errorResponse.buildResponseEntityObject();
     }
 }

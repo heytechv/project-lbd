@@ -12,7 +12,7 @@ import java.util.Locale;
 import java.util.Set;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)  // universal DTO mapper (hide null fields)
-@Getter @Setter @AllArgsConstructor @NoArgsConstructor
+@Setter @Getter @AllArgsConstructor @NoArgsConstructor
 public class DelegationDTO {
 
     // TODO wybrac co ma byc nie null (do validacji)
