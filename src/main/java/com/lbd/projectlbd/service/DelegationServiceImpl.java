@@ -27,7 +27,6 @@ public class DelegationServiceImpl implements DelegationService {
     }
 
     @Override public ResponseEntity<Object> delete(Long id) {
-
         Optional<Delegation> optionalDelegation = delegationRepository.findById(id);
         if (optionalDelegation.isEmpty())
             throw new EntityNotFoundException("Delegation with id="+id+" not found!");

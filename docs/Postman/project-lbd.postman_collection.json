@@ -1,0 +1,67 @@
+{
+	"info": {
+		"_postman_id": "f3153651-33c2-4151-8458-7cd4315f0d4d",
+		"name": "project-lbd",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22094303"
+	},
+	"item": [
+		{
+			"name": "delegation->add",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"startDate\": \"2022-01-01\",\r\n    \"endDate\": \"2022-01-06\",\r\n    \"name\": \"siema\",\r\n    \"lastname\": \"lastname\",\r\n    \"city\": \"Warsaw\",\r\n    \"countryCode\": \"PL\",\r\n    \"description\": \"sjakjfksa\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/adddelegation",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"adddelegation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delegation->delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/api/deletedelegation",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"deletedelegation"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
