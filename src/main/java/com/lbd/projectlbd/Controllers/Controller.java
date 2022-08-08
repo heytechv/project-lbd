@@ -20,6 +20,6 @@ public class Controller {
 
     @DeleteMapping("/api/deleteDelegation")
     public void deleteDelegation(@RequestParam Long id){
-        service.delete(id);
+        service.delete();
     }
 }
