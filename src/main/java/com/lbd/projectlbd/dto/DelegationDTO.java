@@ -13,19 +13,17 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-//@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)  // universal DTO mapper (hide null fields)
 @Getter @Setter
 public class DelegationDTO {
 
-    private Timestamp startDate;
-    private Timestamp endDate;
-    private String name;
-    private String lastname;
-    private String city;
-    private Locale countryCode;  // Arrays.asList(Locale.getISOCountries()).contains("DE")
-    private String description;
-
-
+    @NotNull private Timestamp startDate;
+    @NotNull private Timestamp endDate;
+    @NotNull private String name;
+    @NotNull private String lastname;
+    @NotNull private String city;
+    @NotNull private Locale countryCode;  // Arrays.asList(Locale.getISOCountries()).contains("DE")
+    @NotNull private String description;
 
 
 }

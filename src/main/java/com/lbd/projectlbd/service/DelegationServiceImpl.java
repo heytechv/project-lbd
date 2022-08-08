@@ -12,12 +12,9 @@ public class DelegationServiceImpl implements DelegationService {
 
     @Autowired DelegationRepository delegationRepository;
 
-//    @Autowired DelegationMapper delegationMapper;
-
 
     @Override public void add(DelegationDTO delegationDTO) {
-
-        Delegation delegation = convertDtoToEntity(delegationDTO);
+        Delegation delegation = DelegationMapper.convertDtoToEntity(delegationDTO);
         delegationRepository.save(delegation);
     }
 
@@ -27,17 +24,6 @@ public class DelegationServiceImpl implements DelegationService {
     }
 
 
-    private Delegation convertDtoToEntity(DelegationDTO delegationDTO) {
-        Delegation delegation = new Delegation();
-        delegation.setStartDate(delegationDTO.getStartDate());
-        delegation.setEndDate(delegationDTO.getEndDate());
-        delegation.setName(delegationDTO.getName());
-        delegation.setLastname(delegationDTO.getLastname());
-        delegation.setCity(delegationDTO.getCity());
-        delegation.setCountryCode(delegationDTO.getCountryCode());
-        delegation.setDescription(delegationDTO.getDescription());
 
-        return delegation;
-    }
 
 }

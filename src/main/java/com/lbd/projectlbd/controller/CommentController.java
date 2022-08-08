@@ -1,4 +1,4 @@
-package com.lbd.projectlbd.Controllers;
+package com.lbd.projectlbd.controller;
 
 import com.lbd.projectlbd.entity.Comment;
 import com.lbd.projectlbd.service.CommentServiceImpl;
