@@ -23,7 +23,7 @@ public class Comment {
     @Column(name = "text")
     private String text;
     @ManyToOne
-    @JoinColumn(name = "delegation",referencedColumnName = "delegation_id")
+    @JoinColumn(name = "delegation_id",referencedColumnName = "delegation_id")
     private Delegation delegation;
 
     @OneToMany(mappedBy = "comment")
