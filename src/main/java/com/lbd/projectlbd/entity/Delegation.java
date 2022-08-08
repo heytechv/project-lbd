@@ -2,9 +2,7 @@ package com.lbd.projectlbd.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.HashSet;
 import java.util.Locale;
-import java.util.Set;
 
 @Entity
 @Table(name = "Delegation")
