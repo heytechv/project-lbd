@@ -12,8 +12,8 @@ public class DelegationController {
     DelegationServiceImpl service;
 
     @PostMapping("/api/addDelegation")
-    public void addDelegation(@RequestBody Delegation delegation){
-        service.add(delegation);
+    public Delegation addDelegation(@RequestBody Delegation delegation){
+        return service.add(delegation);
 
     }
 
