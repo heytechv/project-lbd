@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.Optional;
+
 @Service
 public class DelegationServiceImpl implements DelegationService {
 
@@ -25,8 +28,12 @@ public class DelegationServiceImpl implements DelegationService {
 
     @Override public ResponseEntity<Object> delete(Long id) {
 
-        return new StandardResponse(HttpStatus.OK, "Delegation deleted").buildResponseEntity();
+        Optional<Delegation> optionalDelegation = delegationRepository.findById(id);
+        if (optionalDelegation.isEmpty())
+            throw new EntityNotFoundException("Delegation with id="+id+" not found!");
+        delegationRepository.delete(optionalDelegation.get());
 
+        return new StandardResponse(HttpStatus.OK, "Delegation deleted").buildResponseEntity();
     }
 
 
