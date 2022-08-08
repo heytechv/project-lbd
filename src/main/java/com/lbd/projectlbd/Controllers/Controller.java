@@ -1,0 +1,25 @@
+package com.lbd.projectlbd.Controllers;
+
+import com.lbd.projectlbd.entity.Delegation;
+import com.lbd.projectlbd.service.DelegationServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+public class Controller {
+
+    @Autowired
+    DelegationServiceImpl service;
+
+    @PostMapping("/api/addDelegation")
+    public void addDelegation(@RequestBody Delegation delegation){
+        service.add(delegation);
+
+    }
+
+    @DeleteMapping("/api/deleteDelegation")
+    public void deleteDelegation(@RequestParam Long id){
+        service.delete(id);
+    }
+}
