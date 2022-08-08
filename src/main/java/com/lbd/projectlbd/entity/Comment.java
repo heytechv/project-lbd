@@ -11,7 +11,7 @@ import java.util.Set;
 @Data
 @Table(name = "COMMENT")
 public class Comment {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")      private Long id;
     @Column(name = "author")  private String author;
     @Column(name = "date")    private Date date;
