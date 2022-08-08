@@ -27,6 +27,6 @@ public class Delegation {
 
     // Checkpoints for delegation
     @OneToMany(mappedBy = "delegation")
-    private Set<Checkpoint> checkpointSet = new HashSet<>();
+    private List<Checkpoint> checkpointSet = new ArrayList<>();
 
 }

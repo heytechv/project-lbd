@@ -18,6 +18,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Optional;
 
 @Service
@@ -58,7 +61,8 @@ public class DelegationServiceImpl implements DelegationService {
 
     /**
      * Rest Controller */
-    @Override public ResponseEntity<StandardResponse> add(DelegationDTO delegationDTO) {
+    @Override @Transactional
+    public ResponseEntity<StandardResponse> add(DelegationDTO delegationDTO) {
         Delegation delegation = DelegationMapper.convertDtoToEntity(delegationDTO);
         delegationRepository.save(delegation);
 
@@ -66,7 +70,15 @@ public class DelegationServiceImpl implements DelegationService {
         return new StandardResponse(HttpStatus.OK, "Delegation added").buildResponseEntity();
     }
 
-    @Override public ResponseEntity<StandardResponse> delete(Long id) {
+    @Override @Transactional
+    public ResponseEntity<StandardResponse> delete(Long id) {
+        Delegation delegation = findById(id);
+
+        delegation.getCheckpointSet().forEach(checkpoint -> checkpointService.delete(checkpoint));
+        // todo dla komentarza tak samo usuwanie
+
+
+
         delegationRepository.delete(findById(id));
         return new StandardResponse(HttpStatus.OK, "Delegation deleted").buildResponseEntity();
     }

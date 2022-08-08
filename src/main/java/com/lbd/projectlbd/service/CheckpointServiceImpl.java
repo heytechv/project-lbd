@@ -24,6 +24,11 @@ public class CheckpointServiceImpl implements CheckpointService {
         return new StandardResponse(HttpStatus.OK, "Checkpoint added").buildResponseEntity();
     }
 
+    @Override public ResponseEntity<StandardResponse> delete(Checkpoint checkpoint) {
+        checkpointRepository.delete(checkpoint);
+        return new StandardResponse(HttpStatus.OK, "Checkpoint deleted").buildResponseEntity();
+    }
+
 
     /**
      * Rest Controller */

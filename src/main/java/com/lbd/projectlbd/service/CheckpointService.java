@@ -10,6 +10,7 @@ public interface CheckpointService {
     /**
      * Utilities */
     ResponseEntity<StandardResponse> add(Checkpoint checkpoint);
+    ResponseEntity<StandardResponse> delete(Checkpoint checkpoint);
 
     /**
      * Rest Controller */
