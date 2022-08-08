@@ -1,4 +1,4 @@
-package com.lbd.projectlbd.apierror;
+package com.lbd.projectlbd.apiresponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,8 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import javax.persistence.EntityNotFoundException;
 
 @ControllerAdvice
 public class ControllersAdvice extends ResponseEntityExceptionHandler {
@@ -17,12 +20,15 @@ public class ControllersAdvice extends ResponseEntityExceptionHandler {
     Logger logger = LoggerFactory.getLogger(ControllersAdvice.class);
 
 
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Object> handleEntityNotfound(EntityNotFoundException ex) {
+        StandardResponse errorResponse = new StandardResponse(HttpStatus.BAD_REQUEST, "Not found", ex);
+        return errorResponse.buildResponseEntity();
+    }
+
     /** Dla @Valid */
     @Override protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-
-        logger.warn("SIEMAXD");
-
-        ApiErrorResponse errorResponse = new ApiErrorResponse(HttpStatus.BAD_REQUEST, "Validation error", ex);
+        StandardResponse errorResponse = new StandardResponse(HttpStatus.BAD_REQUEST, "Validation error", ex);
         errorResponse.addValidationError(ex.getBindingResult().getGlobalError());
         errorResponse.addValidationErrors(ex.getBindingResult().getFieldErrors());
         return errorResponse.buildResponseEntity();

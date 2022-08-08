@@ -1,4 +1,4 @@
-package com.lbd.projectlbd.apierror;
+package com.lbd.projectlbd.apiresponse;
 
 import lombok.Getter;
 import lombok.Setter;

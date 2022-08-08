@@ -1,8 +1,9 @@
-package com.lbd.projectlbd.apierror;
+package com.lbd.projectlbd.apiresponse;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.val;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -14,32 +15,41 @@ import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Setter @Getter
-public class ApiErrorResponse {
+public class StandardResponse {
 
-    private HttpStatus status;
+//    private HttpStatus status;
+    private Integer status;
     private LocalDateTime timestamp;
     private String message;
     private String debugMessage;
-    private List<ApiError> apiErrorList = new ArrayList<>();
+    private List<ApiError> apiErrorList;
 
-    public ApiErrorResponse() {
+    public StandardResponse() {
         this.timestamp = LocalDateTime.now();
     }
 
-    public ApiErrorResponse(HttpStatus status, String message, Throwable ex) {
+    public StandardResponse(HttpStatus status, String message) {
         this();
-        this.status = status;
+        this.status = status.value();
+        this.message = message;
+    }
+
+    public StandardResponse(HttpStatus status, String message, Throwable ex) {
+        this();
+        this.status = status.value();
         this.message = message;
         this.debugMessage = ex.getLocalizedMessage();
     }
 
-
-    /**
-     * */
     private void addError(ApiError error) {
+        if (apiErrorList == null)
+            apiErrorList = new ArrayList<>();
         apiErrorList.add(error);
     }
 
+    /**
+     * Validation errors (for @Valid ResponseBody)
+     * */
     public void addValidationError(String objectName, String message) {
         addError(new ApiValidationError(objectName, message));
     }
@@ -62,14 +72,12 @@ public class ApiErrorResponse {
         fieldErrorList.forEach(this::addValidationError);
     }
 
+
     /**
+     * Build ResponseEntity message
      * */
     public ResponseEntity<Object> buildResponseEntity() {
-        return ResponseEntity.status(this.getStatus()).header("successful", "false").body(this);
+        return ResponseEntity.status(this.getStatus()).body(this);
     }
-
-
-
-
 
 }

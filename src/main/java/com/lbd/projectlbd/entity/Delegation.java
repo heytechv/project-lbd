@@ -20,7 +20,7 @@ public class Delegation {
     @Column(name = "first_name")  private String name;
     @Column(name = "last_name")   private String lastname;
     @Column(name = "city")        private String city;
-    @Column(name = "country")     private Locale countryCode;  // Arrays.asList(Locale.getISOCountries()).contains("DE")
+    @Column(name = "country")     private String countryCode;  // Arrays.asList(Locale.getISOCountries()).contains("DE")
     @Column(name = "description") private String description ;
 
     @OneToMany(mappedBy = "delegation")

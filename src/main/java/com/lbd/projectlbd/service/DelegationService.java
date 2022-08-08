@@ -1,11 +1,11 @@
 package com.lbd.projectlbd.service;
 
 import com.lbd.projectlbd.dto.DelegationDTO;
-import com.lbd.projectlbd.entity.Delegation;
+import org.springframework.http.ResponseEntity;
 
 public interface DelegationService {
 
-    void add(DelegationDTO delegationDTO);
-    void delete();
+    ResponseEntity<Object> add(DelegationDTO delegationDTO);
+    ResponseEntity<Object> delete(Long id);
 
 }
