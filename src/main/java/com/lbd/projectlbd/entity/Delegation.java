@@ -1,5 +1,7 @@
 package com.lbd.projectlbd.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.HashSet;
@@ -7,21 +9,21 @@ import java.util.Locale;
 import java.util.Set;
 
 @Entity
-@Table(name = "Delegation")
+@Data
+@Table(name = "DELEGATION")
 public class Delegation {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "delegation_id") private Long id;
-    @Column(name = "start_date") private Timestamp start_date;
-    @Column(name = "end_date") private Timestamp end_date;
-    @Column(name = "name") private String name;
-    @Column(name = "surname") private String surname;
+    @Column(name = "id") private Long id;
+    @Column(name = "begin_date") private Timestamp startDate;
+    @Column(name = "end_date") private Timestamp endDate;
+    @Column(name = "first_name") private String name;
+    @Column(name = "last_name") private String lastname;
     @Column(name = "city") private String city;
-    @Column(name = "country_code") private Locale country_code;  // Arrays.asList(Locale.getISOCountries()).contains("DE")
-    @Column(name = "info") private String info;
-//    @Column(name = "start_date") private Timestamp start_date;
-    @OneToMany(mappedBy = "delegation")
-    private Set<Comment> comment=new HashSet<>();
+    @Column(name = "country") private Locale country_code;  // Arrays.asList(Locale.getISOCountries()).contains("DE")
+    @Column(name = "description") private String info;
 
+    @OneToMany(mappedBy = "delegation")
+    private Set<Comment> commentSet = new HashSet<>();
 
 }
