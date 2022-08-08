@@ -1,6 +1,5 @@
 package com.lbd.projectlbd.Controllers;
 
-import com.lbd.projectlbd.dto.DelegationDTO;
 import com.lbd.projectlbd.entity.Delegation;
 import com.lbd.projectlbd.service.DelegationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,7 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class Controller {
+public class DelegationController {
 
     @Autowired
     DelegationServiceImpl service;
