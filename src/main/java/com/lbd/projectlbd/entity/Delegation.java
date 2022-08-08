@@ -19,7 +19,7 @@ public class Delegation {
     @Column(name = "info") private String info;
 
     @OneToOne(mappedBy = "delegation")
-    @Column(name = "comment") private Comment comment;
+    private Comment comment;
 
 
 }
