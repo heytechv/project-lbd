@@ -1,5 +1,6 @@
 package com.lbd.projectlbd.Controllers;
 
+import com.lbd.projectlbd.dto.DelegationDTO;
 import com.lbd.projectlbd.entity.Delegation;
 import com.lbd.projectlbd.service.DelegationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,8 @@ public class Controller {
     DelegationServiceImpl service;
 
     @PostMapping("/api/addDelegation")
-    public void addDelegation(@RequestBody Delegation delegation){
-        service.add(delegation);
+    public void addDelegation(@RequestBody DelegationDTO delegationDTO){
+        service.add(delegationDTO);
 
     }
 
