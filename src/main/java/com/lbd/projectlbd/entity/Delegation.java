@@ -2,7 +2,9 @@ package com.lbd.projectlbd.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 @Entity
 @Table(name = "Delegation")
@@ -18,8 +20,8 @@ public class Delegation {
     @Column(name = "country_code") private Locale country_code;  // Arrays.asList(Locale.getISOCountries()).contains("DE")
     @Column(name = "info") private String info;
 //    @Column(name = "start_date") private Timestamp start_date;
-    @OneToOne(mappedBy = "delegation")
-    private Comment comment;
+    @OneToMany(mappedBy = "delegation")
+    private Set<Comment> comment=new HashSet<>();
 
 
 }

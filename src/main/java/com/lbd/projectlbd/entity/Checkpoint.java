@@ -12,4 +12,5 @@ public class Checkpoint {
     @Column(name = "id") private Long id;
 
 
+
 }

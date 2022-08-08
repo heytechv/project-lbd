@@ -4,6 +4,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Comment")
@@ -20,8 +22,14 @@ public class Comment {
     private Date date;
     @Column(name = "text")
     private String text;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "delegation",referencedColumnName = "delegation_id")
     private Delegation delegation;
+
+    @OneToMany(mappedBy = "comment")
+    private Set<Comment> comments=new HashSet<>();
+    @ManyToOne
+    private Comment comment;
+
 
 }
