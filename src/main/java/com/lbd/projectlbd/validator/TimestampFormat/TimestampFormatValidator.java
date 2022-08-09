@@ -11,7 +11,6 @@ public class TimestampFormatValidator implements ConstraintValidator<TimestampFo
 
     @Override
     public boolean isValid(Timestamp timestamp, ConstraintValidatorContext constraintValidatorContext) {
-
 //        try {
 //            Timestamp.valueOf()
 //        }
