@@ -37,19 +37,19 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override @Transactional
-    public ResponseEntity<StandardResponse> add(CommentDto commentDto) {
+    public CommentDto add(CommentDto commentDto) {
         Comment comment=CommentMapper.convertCommentToEntity(commentDto);
 //        comment.setDelegation(delegationRepository.findById(commentDto.getDelegationId()));
         commentRepository.save(comment);
-        return new StandardResponse(HttpStatus.OK, "Comment added").buildResponseEntity();
+        return commentDto;
     }
 
     @Override @Transactional
-    public ResponseEntity<StandardResponse> delete(Long id) {
+    public Comment delete(Long id) {
         Comment comment = findById(id);
         if(!comment.getCommentSet().isEmpty())
             comment.getCommentSet().forEach(comments -> commentRepository.delete(comment));
         commentRepository.deleteById(id);
-        return new StandardResponse(HttpStatus.OK, "Comment deleted").buildResponseEntity();
+        return comment;
     }
 }
