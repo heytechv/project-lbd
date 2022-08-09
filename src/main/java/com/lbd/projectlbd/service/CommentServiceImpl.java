@@ -1,18 +1,15 @@
 package com.lbd.projectlbd.service;
 
-import com.lbd.projectlbd.apiresponse.StandardResponse;
 import com.lbd.projectlbd.dto.CommentDto;
 import com.lbd.projectlbd.entity.Comment;
 import com.lbd.projectlbd.entity.Delegation;
 import com.lbd.projectlbd.mapper.CommentMapper;
 import com.lbd.projectlbd.repository.CommentRepository;
 import com.lbd.projectlbd.repository.DelegationRepository;
-import org.apache.coyote.Response;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Id;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
@@ -39,7 +36,9 @@ public class CommentServiceImpl implements CommentService{
     @Override @Transactional
     public CommentDto add(CommentDto commentDto) {
         Comment comment=CommentMapper.convertCommentToEntity(commentDto);
-//        comment.setDelegation(delegationRepository.findById(commentDto.getDelegationId()));
+        System.out.println(commentDto);
+        Optional<Delegation> optionalComment = delegationRepository.findById(commentDto.getDelegationId());
+        comment.setDelegation(optionalComment.get());
         commentRepository.save(comment);
         return commentDto;
     }
@@ -51,5 +50,10 @@ public class CommentServiceImpl implements CommentService{
             comment.getCommentSet().forEach(comments -> commentRepository.delete(comment));
         commentRepository.deleteById(id);
         return comment;
+    }
+
+    @Override @Transactional
+    public void update(CommentDto commentDto){
+         commentRepository.save(CommentMapper.convertCommentToEntity(commentDto));
     }
 }
