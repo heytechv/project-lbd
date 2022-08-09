@@ -1,13 +1,15 @@
 package com.lbd.projectlbd.service;
 
-import com.lbd.projectlbd.apiresponse.StandardResponse;
 import com.lbd.projectlbd.dto.CommentDto;
 import com.lbd.projectlbd.entity.Comment;
-import org.springframework.http.ResponseEntity;
+
+import java.util.List;
 
 public interface CommentService {
 
-    ResponseEntity<StandardResponse> add(CommentDto comment);
-    ResponseEntity<StandardResponse> delete(Long id);
-    Comment findById(Long id);
+    void add(CommentDto comment);
+    Comment delete(Long id);
+    CommentDto findById(Long id);
+    List<CommentDto> getAllByDelegationId(Long delegationId);
+    void update(Long id, CommentDto commentDto);
 }

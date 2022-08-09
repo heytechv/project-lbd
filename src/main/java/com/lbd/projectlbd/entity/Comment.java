@@ -17,18 +17,17 @@ public class Comment {
     @Column(name = "id")      private Long id;
     @Column(name = "author")  private String author;
     @Column(name = "date")    private Timestamp date;
-    @Column(name = "content") private String text;
+    @Column(name = "content") private String content;
 
     // Comment to delegation
     @ManyToOne
     @JoinColumn(name = "delegation_id")
     private Delegation delegation;
 
-    // Comment for comment (subcomment)
+   //  Comment for comment (subcomment)
     @OneToMany(mappedBy = "comment")
     private Set<Comment> commentSet = new HashSet<>();
     @ManyToOne
     @JoinColumn(name = "parent_id")
     private Comment comment;
-
 }

@@ -1,55 +1,62 @@
 package com.lbd.projectlbd.service;
 
-import com.lbd.projectlbd.apiresponse.StandardResponse;
 import com.lbd.projectlbd.dto.CommentDto;
 import com.lbd.projectlbd.entity.Comment;
-import com.lbd.projectlbd.entity.Delegation;
 import com.lbd.projectlbd.mapper.CommentMapper;
 import com.lbd.projectlbd.repository.CommentRepository;
 import com.lbd.projectlbd.repository.DelegationRepository;
-import org.apache.coyote.Response;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
-import java.util.Optional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService{
 
-    private CommentRepository commentRepository;
-    private DelegationRepository delegationRepository;
+    private final CommentRepository commentRepository;
+    private final DelegationRepository delegationRepository;
+    private final CommentMapper commentMapper;
 
-
-    public CommentServiceImpl(CommentRepository commentRepository, DelegationRepository delegationRepository){
-        this.commentRepository=commentRepository;
-        this.delegationRepository=delegationRepository;
+    @Override
+    public CommentDto findById(Long id) {
+        return commentMapper.convertCommentToDto(commentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Comment with id="+id+" not found!")));
     }
 
     @Override
-    public Comment findById(Long id) {
-        Optional<Comment> optionalDelegation = commentRepository.findById(id);
-        if (optionalDelegation.isEmpty())
-            throw new EntityNotFoundException("Comment with id="+id+" not found!");
-        return optionalDelegation.get();
+    public List<CommentDto> getAllByDelegationId(Long delegationId) {
+        if(!delegationRepository.existsById(delegationId))
+            throw new EntityNotFoundException("Delegation with id="+delegationId+" not found!");
+        return commentRepository.getAllByDelegationId(delegationId)
+                .stream()
+                .map(commentMapper::convertCommentToDto)
+                .collect(Collectors.toList());
     }
 
     @Override @Transactional
-    public ResponseEntity<StandardResponse> add(CommentDto commentDto) {
-        Comment comment=CommentMapper.convertCommentToEntity(commentDto);
-//        comment.setDelegation(delegationRepository.findById(commentDto.getDelegationId()));
+    public void add(CommentDto commentDto) {
+        if(!delegationRepository.existsById(commentDto.getDelegationId()))
+            throw new EntityNotFoundException("Delegation with id="+commentDto.getDelegationId()+" not found!");
+        Comment comment = commentMapper.convertCommentToEntity(commentDto);
         commentRepository.save(comment);
-        return new StandardResponse(HttpStatus.OK, "Comment added").buildResponseEntity();
     }
 
     @Override @Transactional
-    public ResponseEntity<StandardResponse> delete(Long id) {
-        Comment comment = findById(id);
+    public void update(Long id, CommentDto commentDto){
+        Comment comment = commentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Comment with id="+id+" not found!"));
+        commentRepository.save(commentMapper.updateComment(commentDto, comment));
+    }
+
+    @Override @Transactional
+    public Comment delete(Long id) {
+        Comment comment = commentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Comment with id="+id+" not found!"));
         if(!comment.getCommentSet().isEmpty())
             comment.getCommentSet().forEach(comments -> commentRepository.delete(comment));
         commentRepository.deleteById(id);
-        return new StandardResponse(HttpStatus.OK, "Comment deleted").buildResponseEntity();
+        return comment;
     }
 }
