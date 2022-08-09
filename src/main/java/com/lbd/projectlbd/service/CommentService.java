@@ -8,7 +8,7 @@ import java.util.List;
 public interface CommentService {
 
     void add(CommentDto comment);
-    Comment delete(Long id);
+    void delete(Long id);
     CommentDto findById(Long id);
     List<CommentDto> getAllByDelegationId(Long delegationId);
     void update(Long id, CommentDto commentDto);
