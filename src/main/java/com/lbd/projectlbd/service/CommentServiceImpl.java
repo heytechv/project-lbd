@@ -23,7 +23,8 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public CommentDto findById(Long id) {
-        return commentMapper.convertCommentToDto(commentRepository.findById(id)
+        return commentMapper
+                .convertCommentToDto(commentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Comment with id="+id+" not found!")));
     }
 
@@ -41,12 +42,18 @@ public class CommentServiceImpl implements CommentService{
     public void add(CommentDto commentDto) {
         if(!delegationRepository.existsById(commentDto.getDelegationId()))
             throw new EntityNotFoundException("Delegation with id="+commentDto.getDelegationId()+" not found!");
+        if(commentDto.getParentId() != null && !commentRepository.existsById(commentDto.getParentId()))
+            throw new EntityNotFoundException("Comment with id="+commentDto.getParentId()+" not found!");
         Comment comment = commentMapper.convertCommentToEntity(commentDto);
         commentRepository.save(comment);
     }
 
     @Override @Transactional
     public void update(Long id, CommentDto commentDto){
+        if(commentDto.getDelegationId() != null && !delegationRepository.existsById(commentDto.getDelegationId()))
+            throw new EntityNotFoundException("Delegation with id="+commentDto.getDelegationId()+" not found!");
+        if(commentDto.getParentId() != null && !commentRepository.existsById(commentDto.getParentId()))
+            throw new EntityNotFoundException("Comment with id="+commentDto.getParentId()+" not found!");
         Comment comment = commentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Comment with id="+id+" not found!"));
         commentRepository.save(commentMapper.updateComment(commentDto, comment));
     }
