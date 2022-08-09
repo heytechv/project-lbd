@@ -5,9 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.swing.text.html.Option;
 import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Data
@@ -26,7 +24,7 @@ public class Comment {
 
    //  Comment for comment (subcomment)
     @OneToMany(mappedBy = "comment")
-    private Set<Comment> commentSet = new HashSet<>();
+    private List<Comment> commentList = new ArrayList<>();
     @ManyToOne
     @JoinColumn(name = "parent_id")
     private Comment comment;

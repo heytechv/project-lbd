@@ -55,16 +55,14 @@ public class CommentServiceImpl implements CommentService{
         if(commentDto.getParentId() != null && !commentRepository.existsById(commentDto.getParentId()))
             throw new EntityNotFoundException("Comment with id="+commentDto.getParentId()+" not found!");
         Comment comment = commentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Comment with id="+id+" not found!"));
-        if(commentDto.getParentId() != null && commentDto.getParentId().equals(comment.getId()))
-            throw new RuntimeException("Comment cannot be a parent of itself!");
         commentRepository.save(commentMapper.updateComment(commentDto, comment));
     }
 
     @Override @Transactional
     public void delete(Long id) {
         Comment comment = commentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Comment with id="+id+" not found!"));
-        if(!comment.getCommentSet().isEmpty())
-            commentRepository.deleteAll(comment.getCommentSet());
+        if(!comment.getCommentList().isEmpty())
+            commentRepository.deleteAll(comment.getCommentList());
         commentRepository.delete(comment);
     }
 }
