@@ -5,6 +5,7 @@ import com.lbd.projectlbd.dto.DelegationDTO;
 import com.lbd.projectlbd.entity.Checkpoint;
 import com.lbd.projectlbd.entity.Delegation;
 import com.lbd.projectlbd.entity.MasterdataCheckpoint;
+import com.lbd.projectlbd.exception.DelegationValidationException;
 import com.lbd.projectlbd.mapper.DelegationMapper;
 import com.lbd.projectlbd.repository.DelegationRepository;
 import com.lbd.projectlbd.repository.MasterdataCheckpointRepository;
@@ -19,7 +20,9 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
 
@@ -64,6 +67,14 @@ public class DelegationServiceImpl implements DelegationService {
     @Override @Transactional
     public void add(DelegationDTO delegationDTO) {
         Delegation delegation = DelegationMapper.convertDtoToEntity(delegationDTO);
+
+        if(delegation.getStartDate().before(new Date())){
+            throw new DelegationValidationException("The delegation cannot include the start date as a past date.");
+        }
+        if(delegation.getEndDate().before(delegation.getStartDate())){
+            throw new DelegationValidationException("The start date must be before the end date.");
+        }
+
         delegationRepository.save(delegation);
 
         addCheckpointsFromMasterData(delegation);
