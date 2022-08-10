@@ -1,6 +1,8 @@
 package com.lbd.projectlbd.entity;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.swing.text.html.Option;
@@ -10,7 +12,8 @@ import java.util.Optional;
 import java.util.Set;
 
 @Entity
-@Data
+@Setter
+@Getter
 @Table(name = "COMMENT")
 public class Comment {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

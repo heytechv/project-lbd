@@ -1,13 +1,16 @@
 package com.lbd.projectlbd.entity;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.*;
 
 @Entity
-@Data
+@Setter
+@Getter
 @Table(name = "DELEGATION")
 public class Delegation {
 

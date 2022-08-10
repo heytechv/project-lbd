@@ -23,17 +23,17 @@ import java.util.stream.Collectors;
 @Service
 public class CheckpointServiceImpl implements CheckpointService {
 
-     CheckpointRepository checkpointRepository;
-     DelegationRepository delegationRepository;
+    @Autowired CheckpointRepository checkpointRepository;
+//    DelegationRepository delegationRepository;
 
-     mapper map;
+    @Autowired mapper map;
 
 
-    public CheckpointServiceImpl(CheckpointRepository checkpointRepository, DelegationRepository delegationRepository, mapper map) {
-        this.checkpointRepository = checkpointRepository;
-        this.delegationRepository = delegationRepository;
-        this.map=map;
-    }
+//    public CheckpointServiceImpl(DelegationRepository delegationRepository, mapper map) {
+////        this.checkpointRepository = checkpointRepository;
+//        this.delegationRepository = delegationRepository;
+//        this.map=map;
+//    }
 
     /**
      * Utilities */
@@ -45,12 +45,13 @@ public class CheckpointServiceImpl implements CheckpointService {
 
     @Override
     public List<CheckpointDto> getCheckpoint(Long id){
-        Optional<Delegation> delegation= delegationRepository.findById(id);
+//        Optional<Delegation> delegation= delegationRepository.findById(id);
+//
+//       return  delegation.map(delegation1 -> delegation1.getCheckpointSet().stream().map(CheckpointMapper::convertEntityToDto).collect(Collectors.toList())
+//         )
+//                 .orElseThrow(()->new EntityNotFoundException("Delegation not found!"));
 
-       return  delegation.map(delegation1 -> delegation1.getCheckpointSet().stream().map(CheckpointMapper::convertEntityToDto).collect(Collectors.toList())
-         )
-                 .orElseThrow(()->new EntityNotFoundException("Delegation not found!"));
-
+        return null;
     }
 
     @Override
@@ -69,8 +70,15 @@ public class CheckpointServiceImpl implements CheckpointService {
 
     @Override
     public void patch(Long id, JsonPatch patch) {
+
+        Optional<Checkpoint> optionalCheckpoint = checkpointRepository.findById(id);
+        if (optionalCheckpoint.isEmpty())
+            throw new EntityNotFoundException("Not found xd");
+
+        Checkpoint checkpoint = optionalCheckpoint.get();
+
         try {
-            Checkpoint checkpoint = checkpointRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Comment with id=" + id + " not found!"));
+//            Checkpoint checkpoint = checkpointRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Comment with id=" + id + " not found!"));
             Checkpoint checkpointPatched = applyPatchToCheckpoint(patch, checkpoint);
             update(id,map.mapCheckpointToDCheckpointDTO(checkpointPatched) );
         } catch (JsonPatchException | JsonProcessingException e) {
@@ -79,7 +87,8 @@ public class CheckpointServiceImpl implements CheckpointService {
     }
     private Checkpoint applyPatchToCheckpoint(JsonPatch patch, Checkpoint targetCheckpoint) throws JsonPatchException, JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode patched = patch.apply(objectMapper.convertValue(targetCheckpoint, JsonNode.class));
+        CheckpointDto checkpointDto = map.mapCheckpointToDCheckpointDTO(targetCheckpoint);
+        JsonNode patched = patch.apply(objectMapper.convertValue(checkpointDto, JsonNode.class));
         return objectMapper.treeToValue(patched, Checkpoint.class);
     }
 

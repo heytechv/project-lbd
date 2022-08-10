@@ -1,13 +1,15 @@
 package com.lbd.projectlbd.entity;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "DELEGATION_CHECKLIST")
-@Data
+@Setter @Getter
 public class Checkpoint {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

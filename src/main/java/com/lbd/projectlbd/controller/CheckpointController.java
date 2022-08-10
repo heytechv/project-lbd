@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/checkpoint")
+@RequestMapping(path = "/api/checkpoint")
 public class CheckpointController {
 
     CheckpointService checkpointService;
@@ -34,13 +34,13 @@ public class CheckpointController {
         return new StandardResponse(HttpStatus.OK,"Checkpoint deleted").buildResponseEntity();
     }
 
-    @PatchMapping(path = "/{id}", consumes = "application/json-patch+json")
+    @PatchMapping(value = "/{id}", consumes = "application/json-patch+json")
     public ResponseEntity<StandardResponse> changeStatus(@PathVariable Long id, @RequestBody JsonPatch patch)  {
         checkpointService.patch(id, patch);
         return new StandardResponse(HttpStatus.OK, "Checkpoint patched").buildResponseEntity();
     }
 
-    @PutMapping(path = "/{id}")
+    @PutMapping("/{id}")
     public void update(@PathVariable Long id, @RequestBody CheckpointDto checkpointDto){
         checkpointService.update(id,checkpointDto);
     }
