@@ -13,7 +13,8 @@ public interface DelegationService {
 
     /**
      * Rest Controller */
-    ResponseEntity<StandardResponse> add(DelegationDTO delegationDTO);
-    ResponseEntity<StandardResponse> delete(Long id);
+    void add(DelegationDTO delegationDTO);
+    void delete(Long id);
+    void edit(Long id);
 
 }

@@ -62,16 +62,15 @@ public class DelegationServiceImpl implements DelegationService {
     /**
      * Rest Controller */
     @Override @Transactional
-    public ResponseEntity<StandardResponse> add(DelegationDTO delegationDTO) {
+    public void add(DelegationDTO delegationDTO) {
         Delegation delegation = DelegationMapper.convertDtoToEntity(delegationDTO);
         delegationRepository.save(delegation);
 
         addCheckpointsFromMasterData(delegation);
-        return new StandardResponse(HttpStatus.OK, "Delegation added").buildResponseEntity();
     }
 
     @Override @Transactional
-    public ResponseEntity<StandardResponse> delete(Long id) {
+    public void delete(Long id) {
         Delegation delegation = findById(id);
 
         delegation.getCheckpointSet().forEach(checkpoint -> checkpointService.delete(checkpoint));
@@ -80,7 +79,10 @@ public class DelegationServiceImpl implements DelegationService {
 
 
         delegationRepository.delete(findById(id));
-        return new StandardResponse(HttpStatus.OK, "Delegation deleted").buildResponseEntity();
+    }
+
+    @Override public void edit(Long id) {
+
     }
 
 
