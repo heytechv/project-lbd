@@ -74,7 +74,7 @@ public class DelegationServiceImpl implements DelegationService {
     public ResponseEntity<StandardResponse> delete(Long id) {
         Delegation delegation = findById(id);
 
-        delegation.getCheckpointSet().forEach(checkpoint -> checkpointService.delete(checkpoint));
+        delegation.getCheckpointSet().forEach(checkpoint -> checkpointService.deleteCheckpoint(id));
         // todo dla komentarza tak samo usuwanie
 
 

@@ -17,13 +17,13 @@ public class CheckpointMapper {
         return checkpoint;
     }
 
-//    public static CheckpointDto convertEntityToDto(Checkpoint checkpoint) {
-//        CheckpointDto checkpointDto = new CheckpointDto();
-//        checkpointDto.setDelegationId(checkpoint.getDelegation().getId());
-//        checkpointDto.setComment(checkpoint.getComment());
-//        checkpointDto.setIsChecked(checkpoint.getIsChecked());
-//
-//        return checkpointDto;
-//    }
+    public static CheckpointDto convertEntityToDto(Checkpoint checkpoint) {
+        CheckpointDto checkpointDto = new CheckpointDto();
+        checkpointDto.setDelegationId(checkpoint.getDelegation().getId());
+        checkpointDto.setComment(checkpoint.getComment());
+        checkpointDto.setIsChecked(checkpoint.getIsChecked());
+        checkpointDto.setDescription(checkpoint.getDescription());
+        return checkpointDto;
+    }
 
 }

@@ -9,8 +9,9 @@ import javax.validation.constraints.NotNull;
 @JsonInclude(JsonInclude.Include.NON_NULL)  // universal DTO mapper (hide null fields)
 @Setter @Getter
 public class CheckpointDto {
-    @NotNull private Long delegationId;
-    @NotNull private Long masterDataCheckpointId;
-    @NotNull private String comment;
-    private Boolean isChecked = false;
+     private Long delegationId;
+     private Long masterDataCheckpointId;
+     private String comment;
+     private String description;
+     private Boolean isChecked = false;
 }
