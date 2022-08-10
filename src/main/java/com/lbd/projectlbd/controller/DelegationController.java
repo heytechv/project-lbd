@@ -2,6 +2,7 @@ package com.lbd.projectlbd.controller;
 
 import com.lbd.projectlbd.apiresponse.StandardResponse;
 import com.lbd.projectlbd.dto.DelegationDTO;
+import com.lbd.projectlbd.mapper.DelegationMapper;
 import com.lbd.projectlbd.service.DelegationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,5 +26,14 @@ public class DelegationController {
     public ResponseEntity<StandardResponse> deleteDelegation(@RequestParam Long id){
         delegationService.delete(id);
         return new StandardResponse(HttpStatus.OK, "Delegation deleted").buildResponseEntity();
+    }
+
+    @GetMapping("/api/delegation/{delegationId}")
+    public ResponseEntity<DelegationDTO> getDelegationById(@PathVariable("delegationId") Long delegationId){
+        DelegationDTO foundDelegation = DelegationMapper.convertEntityToDto(
+                delegationService.findById(delegationId)
+        );
+
+        return ResponseEntity.ok().body(foundDelegation);
     }
 }
