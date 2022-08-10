@@ -1,28 +1,31 @@
 package com.lbd.projectlbd.mapper;
 
-
 import com.lbd.projectlbd.dto.CommentDto;
 import com.lbd.projectlbd.entity.Comment;
+import com.lbd.projectlbd.entity.Delegation;
+import org.mapstruct.*;
 
+@Mapper(componentModel = "spring",
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+        unmappedTargetPolicy = ReportingPolicy.IGNORE)
+public interface CommentMapper {
 
-public class CommentMapper {
+    @Mapping(source = "delegation.id", target = "delegationId")
+    @Mapping(source = "comment.id", target = "parentId")
+    CommentDto convertCommentToDto(Comment comment);
 
-    public static Comment convertCommentToEntity(CommentDto commentDto){
-        Comment comment=new Comment();
-        comment.setAuthor(commentDto.getAuthor());
-        comment.setDate(commentDto.getDate());
-        comment.setText(commentDto.getContent());
-        return comment;
+    @Mapping(target = "id", expression = "java(null)")
+    @Mapping(source = "delegationId", target = "delegation")
+    @Mapping(source = "parentId", target = "comment", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
+    Comment convertCommentToEntity(CommentDto commentDto);
 
-    }
+    @Mapping(target = "id", ignore = true)
+    @Mapping(source = "delegationId", target = "delegation")
+    @Mapping(source = "parentId", target = "comment")
+    Comment updateComment(CommentDto commentDto, @MappingTarget Comment comment);
 
-    public static CommentDto convertCommentToDto(Comment comment){
-        CommentDto commentDto=new CommentDto();
-        commentDto.setAuthor(comment.getAuthor());
-        commentDto.setDate(comment.getDate());
-        commentDto.setContent(comment.getText());
-        commentDto.setParentId(comment.getComment().getId());
-        commentDto.setDelegationId(comment.getDelegation().getId());
-        return commentDto;
-    }
+    @Mapping(target = "id")
+    Delegation mapDelegationById(Long id);
+    @Mapping(target = "id")
+    Comment mapCommentById(Long id);
 }
