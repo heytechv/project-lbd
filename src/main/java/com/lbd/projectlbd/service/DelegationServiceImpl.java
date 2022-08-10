@@ -92,8 +92,17 @@ public class DelegationServiceImpl implements DelegationService {
         delegationRepository.delete(findById(id));
     }
 
-    @Override public void edit(Long id) {
+    @Override public void edit(Long delegationId, DelegationDTO delegationDTO) {
+        Delegation delegation = findById(delegationId);
+        delegation.setStartDate(delegationDTO.getStartDate());
+        delegation.setEndDate(delegationDTO.getEndDate());
+        delegation.setName(delegationDTO.getName());
+        delegation.setLastname(delegationDTO.getLastname());
+        delegation.setCity(delegationDTO.getCity());
+        delegation.setCountryCode(delegationDTO.getCountryCode());
+        delegation.setDescription(delegationDTO.getDescription());
 
+        delegationRepository.save(delegation);
     }
 
 

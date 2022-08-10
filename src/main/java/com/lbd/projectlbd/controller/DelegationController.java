@@ -12,23 +12,24 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
+@RequestMapping(path = "/api/delegation")
 public class DelegationController {
 
     @Autowired DelegationService delegationService;
 
-    @PostMapping("/api/adddelegation")
+    @PostMapping
     public ResponseEntity<StandardResponse> addDelegation(@Valid @RequestBody DelegationDTO delegationDTO){
         delegationService.add(delegationDTO);
         return new StandardResponse(HttpStatus.OK, "Delegation added").buildResponseEntity();
     }
 
-    @DeleteMapping("/api/deletedelegation")
-    public ResponseEntity<StandardResponse> deleteDelegation(@RequestParam Long id){
-        delegationService.delete(id);
+    @DeleteMapping("/{delegationId}")
+    public ResponseEntity<StandardResponse> deleteDelegation(@PathVariable Long delegationId){
+        delegationService.delete(delegationId);
         return new StandardResponse(HttpStatus.OK, "Delegation deleted").buildResponseEntity();
     }
 
-    @GetMapping("/api/delegation/{delegationId}")
+    @GetMapping("/{delegationId}")
     public ResponseEntity<DelegationDTO> getDelegationById(@PathVariable("delegationId") Long delegationId){
         DelegationDTO foundDelegation = DelegationMapper.convertEntityToDto(
                 delegationService.findById(delegationId)
@@ -36,4 +37,11 @@ public class DelegationController {
 
         return ResponseEntity.ok().body(foundDelegation);
     }
+
+    @PutMapping("/{delegationId}")
+    public ResponseEntity<StandardResponse> editDelegationById(@PathVariable Long delegationId, @RequestBody DelegationDTO delegationDTO) {
+        delegationService.edit(delegationId, delegationDTO);
+        return new StandardResponse(HttpStatus.OK, "Delegation edited").buildResponseEntity();
+    }
+
 }
