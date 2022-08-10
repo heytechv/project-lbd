@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,6 +36,32 @@ public class CommentServiceImpl implements CommentService{
         if(!delegationRepository.existsById(delegationId))
             throw new EntityNotFoundException("Delegation with id="+delegationId+" not found!");
         return commentRepository.getAllByDelegationId(delegationId)
+                .stream()
+                .map(commentMapper::convertCommentToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CommentDto> getAllComments() {
+        List<Comment> comments = (List<Comment>) commentRepository.findAll();
+        return comments.stream()
+                .map(commentMapper::convertCommentToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CommentDto> getAllByDate(LocalDateTime date) {
+        return commentRepository.getAllByDate(Timestamp.valueOf(date))
+                .stream()
+                .map(commentMapper::convertCommentToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CommentDto> getAllByUpComment(Long commentId) {
+        if(!commentRepository.existsById(commentId))
+            throw new EntityNotFoundException("Comment with id=" + commentId + " not found!");
+        return commentRepository.getAllByUpComment(commentId)
                 .stream()
                 .map(commentMapper::convertCommentToDto)
                 .collect(Collectors.toList());
