@@ -1,7 +1,7 @@
 package com.lbd.projectlbd.service;
 
 import com.lbd.projectlbd.apiresponse.StandardResponse;
-import com.lbd.projectlbd.dto.DelegationDTO;
+import com.lbd.projectlbd.dto.DelegationDto;
 import com.lbd.projectlbd.entity.Checkpoint;
 import com.lbd.projectlbd.entity.Delegation;
 import com.lbd.projectlbd.entity.MasterdataCheckpoint;
@@ -33,6 +33,7 @@ public class DelegationServiceImpl implements DelegationService {
     @Autowired MasterdataCheckpointRepository masterdataCheckpointRepository;
     @Autowired CheckpointService checkpointService;
 
+    @Autowired DelegationMapper mapper;
 
     /**
      * Utilities */
@@ -65,8 +66,9 @@ public class DelegationServiceImpl implements DelegationService {
     /**
      * Rest Controller */
     @Override @Transactional
-    public void add(DelegationDTO delegationDTO) {
-        Delegation delegation = DelegationMapper.convertDtoToEntity(delegationDTO);
+    public void add(DelegationDto delegationDTO) {
+
+        Delegation delegation = mapper.mapDelegationDtoToDelegation(delegationDTO);
 
         if(delegation.getStartDate().before(new Date())){
             throw new DelegationValidationException("The delegation cannot include the start date as a past date.");
@@ -92,7 +94,7 @@ public class DelegationServiceImpl implements DelegationService {
         delegationRepository.delete(findById(id));
     }
 
-    @Override public void edit(Long delegationId, DelegationDTO delegationDTO) {
+    @Override public void edit(Long delegationId, DelegationDto delegationDTO) {
         Delegation delegation = findById(delegationId);
         delegation.setStartDate(delegationDTO.getStartDate());
         delegation.setEndDate(delegationDTO.getEndDate());

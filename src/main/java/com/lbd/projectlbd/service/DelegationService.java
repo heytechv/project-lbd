@@ -1,7 +1,7 @@
 package com.lbd.projectlbd.service;
 
 import com.lbd.projectlbd.apiresponse.StandardResponse;
-import com.lbd.projectlbd.dto.DelegationDTO;
+import com.lbd.projectlbd.dto.DelegationDto;
 import com.lbd.projectlbd.entity.Delegation;
 import org.springframework.http.ResponseEntity;
 
@@ -13,8 +13,8 @@ public interface DelegationService {
 
     /**
      * Rest Controller */
-    void add(DelegationDTO delegationDTO);
+    void add(DelegationDto delegationDTO);
     void delete(Long id);
-    void edit(Long delegationId, DelegationDTO delegationDTO);
+    void edit(Long delegationId, DelegationDto delegationDTO);
 
 }
