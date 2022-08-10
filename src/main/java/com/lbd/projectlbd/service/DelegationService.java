@@ -15,6 +15,6 @@ public interface DelegationService {
      * Rest Controller */
     void add(DelegationDTO delegationDTO);
     void delete(Long id);
-    void edit(Long id);
+    void edit(Long delegationId, DelegationDTO delegationDTO);
 
 }
