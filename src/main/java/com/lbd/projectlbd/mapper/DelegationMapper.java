@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
-import java.util.Set;
+import java.util.List;
 
 
 @Mapper(componentModel = "spring")
@@ -18,13 +18,13 @@ public interface DelegationMapper {
     DelegationDto mapDelegationToDelegationDTO(Delegation source);
     @IterableMapping(qualifiedByName = "mapDelegationToDelegationDTO")
     @Named("mapDelegationSetToDelegationDtoSet")
-    Set<DelegationDto> mapDelegationSetToDelegationDtoSet(Set<Delegation> source);
+    List<DelegationDto> mapDelegationListToDelegationDtoList(List<Delegation> source);
 
     @Named("mapDelegationDtoToDelegation")
     Delegation mapDelegationDtoToDelegation(DelegationDto source);
     @IterableMapping(qualifiedByName = "mapDelegationDtoToDelegation")
     @Named("mapDelegationDtoSetToDelegationSet")
-    Set<Delegation> mapDelegationDtoSetToDelegationSet(Set<DelegationDto> source);
+    List<Delegation> mapDelegationDtoListToDelegationList(List<DelegationDto> source);
 
 
 
